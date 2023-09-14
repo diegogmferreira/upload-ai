@@ -1,0 +1,45 @@
+# @name hello
+GET http://localhost:3333
+
+###
+
+# @name list-all-Prompts
+GET http://localhost:3333/prompts
+
+
+###
+
+# @name upload-video
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./src/assets/example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/c04ccfe7-3829-4994-8366-5ac2b762482f/transcription
+Content-Type: application/json
+
+{
+  "prompt": "Narração, gol, Cristiano Ronaldo, Real Madrid"
+}
+
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId" : "c04ccfe7-3829-4994-8366-5ac2b762482f",
+  "temperature": 0.4,
+  "template": "Gere um resumo sucinto da transcrição do video informado a seguir: '''{transcription}''' "
+}
